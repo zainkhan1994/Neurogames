@@ -1,7 +1,15 @@
 {
   "name": "neurogames",
-  "private": true,
-  "version": "0.0.0",
+  "description": "A mobile-first cognitive training web app for personalized daily brain workouts",
+  "homepage": "https://zainkhan1994.github.io/Neurogames",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zainkhan1994/Neurogames.git"
+  },
+  "keywords": ["brain-training", "cognitive-exercises", "react", "web-app", "neurogames"],
+  "author": "Zain Khan",
+  "private": false,
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

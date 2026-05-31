@@ -30,6 +30,45 @@ Linting:
 npm run lint
 ```
 
+## Deployment
+
+### GitHub Pages (Recommended)
+
+The app is automatically deployed to GitHub Pages on every push to `main` or `master` branch. The deployment workflow:
+
+1. Runs linting and type checks
+2. Builds the production bundle
+3. Deploys to https://zainkhan1994.github.io/Neurogames
+
+**Note:** GitHub Pages deployment is automatic via GitHub Actions. No manual steps required.
+
+### Docker Deployment
+
+Build and run the app in Docker:
+
+```bash
+# Build image
+docker build -t neurogames:latest .
+
+# Run container
+docker run -p 3000:3000 neurogames:latest
+```
+
+The app will be available at `http://localhost:3000`.
+
+**Multi-stage build:** The Dockerfile uses a two-stage build process to minimize image size:
+- Stage 1: Build the TypeScript and React application
+- Stage 2: Serve the built files with minimal overhead
+
+### Manual Cloud Deployment
+
+The `dist/` folder contains the production-ready static build. Deploy it to any static hosting service:
+
+- **Vercel**: Connect your GitHub repo, it will auto-detect Vite and deploy
+- **Netlify**: Drag-and-drop the `dist/` folder or connect via GitHub
+- **AWS S3 + CloudFront**: Upload `dist/` to S3 and configure CloudFront
+- **Any HTTP server**: Serve the `dist/` folder as static files
+
 ## App Architecture
 
 - `src/App.tsx`
