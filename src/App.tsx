@@ -200,7 +200,7 @@ function App() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 px-4 py-6 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-        <header className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur transition-all duration-300 sm:p-6">
+        <header className="animate-slide-in-up rounded-3xl border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur transition-all duration-300 sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Neurogames</p>
@@ -216,13 +216,13 @@ function App() {
           </div>
         </header>
 
-        <section className="grid gap-4 sm:grid-cols-3">
+        <section className="grid gap-4 animate-slide-in-up sm:grid-cols-3" style={{ animationDelay: '0.1s' }}>
           <MetricCard label="Total Points" value={progress.totalPoints.toString()} />
           <MetricCard label="7-Day Completion" value={`${weeklyCompletion}%`} />
           <MetricCard label="Avg. Workout Score" value={`${averageScore}`} />
         </section>
 
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur sm:p-6">
+        <section className="animate-slide-in-up rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur sm:p-6" style={{ animationDelay: '0.2s' }}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold">Today&apos;s Personalized Plan</h2>
@@ -246,7 +246,8 @@ function App() {
             {todayWorkout.map((exercise, index) => (
               <div
                 key={exercise.id}
-                className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 transition hover:border-cyan-300/40"
+                className="animate-slide-in-up rounded-2xl border border-white/10 bg-slate-900/60 p-4 transition hover:border-cyan-300/40"
+                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
               >
                 <p className="text-xs uppercase tracking-wider text-cyan-200">Exercise {index + 1}</p>
                 <p className="mt-1 font-medium">{exercise.title}</p>
@@ -257,25 +258,31 @@ function App() {
         </section>
 
         {liveWorkout && currentExercise && (
-          <section className="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-xl transition-all duration-300 sm:p-6">
+          <section className="workout-exercise-enter rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-xl transition-all duration-300 sm:p-6">
             <div className="mb-4 flex items-center justify-between text-sm">
               <p>
                 Exercise {liveWorkout.index + 1} of {todayWorkout.length}
               </p>
-              <p className="font-semibold text-cyan-200">{timeLeft}s</p>
+              <p className={`font-semibold text-cyan-200 ${timeLeft <= 10 ? 'animate-timer-pulse' : ''}`}>
+                {timeLeft}s
+              </p>
             </div>
 
             <div className="h-2 overflow-hidden rounded-full bg-slate-700">
               <div
-                className="h-full rounded-full bg-cyan-400 transition-all duration-500"
+                className={`h-full rounded-full transition-all duration-500 ${
+                  timeLeft <= 10 ? 'bg-rose-400' : 'bg-cyan-400'
+                }`}
                 style={{ width: `${(timeLeft / currentExercise.timeLimitSec) * 100}%` }}
               />
             </div>
 
-            <h3 className="mt-4 text-xl font-semibold">{currentExercise.title}</h3>
-            <p className="mt-2 text-sm text-slate-300">{currentExercise.prompt}</p>
+            <h3 className="mt-4 animate-fade-in text-xl font-semibold">{currentExercise.title}</h3>
+            <p className="animate-fade-in mt-2 text-sm text-slate-300" style={{ animationDelay: '0.1s' }}>
+              {currentExercise.prompt}
+            </p>
 
-            <div className="mt-4">
+            <div className="mt-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               {currentExercise.kind === 'multipleChoice' ? (
                 <div className="grid gap-3">
                   {currentExercise.options?.map((option) => (
@@ -314,7 +321,7 @@ function App() {
                 Submit
               </button>
             ) : (
-              <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="feedback-message mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
                 <p
                   className={`font-semibold ${
                     liveWorkout.feedback.correct ? 'text-emerald-300' : 'text-rose-300'
@@ -341,7 +348,7 @@ function App() {
           </section>
         )}
 
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg sm:p-6">
+        <section className="animate-slide-in-up rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg sm:p-6" style={{ animationDelay: '0.4s' }}>
           <h2 className="text-lg font-semibold">Skill Scores</h2>
           <p className="text-sm text-slate-300">
             Scores adapt after each workout with difficulty progression per skill.
@@ -358,7 +365,7 @@ function App() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg sm:p-6">
+        <section className="animate-slide-in-up rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg sm:p-6" style={{ animationDelay: '0.5s' }}>
           <h2 className="text-lg font-semibold">Progress Analytics</h2>
           <div className="mt-4 space-y-3">
             {SKILLS.map((skill) => {
